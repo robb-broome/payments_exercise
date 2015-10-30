@@ -16,6 +16,12 @@ RSpec.describe LoansController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
+    it 'returns outstanding balance' do
+      get :show, id: loan.id
+      puts JSON.parse(response.body)
+      expect(JSON.parse(response.body)).to have_key 'outstanding_balance'
+    end
+
     context 'if the loan is not found' do
       it 'responds with a 404' do
         get :show, id: 10000
